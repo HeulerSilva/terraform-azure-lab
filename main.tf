@@ -81,3 +81,35 @@ resource "azurerm_network_interface_security_group_association" "example" {
   network_interface_id     = azurerm_network_interface.my_terraform_nic.id
   network_security_group_id = azurerm_network_security_group.my_terraform_nsg.id
 }
+
+# Create the Linux VM
+resource "azurerm_linux_virtual_machine" "my_terraform_vm" {
+  name                   = "myVM"
+  location               = var.resource_location
+  resource_group_name    = azurerm_resource_group.rg.name
+  network_interface_ids  = [azurerm_network_interface.my_terraform_nic.id]
+size = "Standard_DS2_v2"
+ 
+  os_disk {
+    name                 = "myOsDisk"
+    caching              = "ReadWrite"
+    storage_account_type = "Premium_LRS"
+  }
+
+  source_image_reference {
+    publisher = "Canonical"
+    offer     = "0001-com-ubuntu-server-jammy"
+    sku       = "22_04-lts-gen2"
+    version   = "latest"
+  }
+
+  computer_name  = "hostname"
+  admin_username = "azureuser"
+
+  disable_password_authentication = false
+  admin_password = var.admin_password
+}
+
+output "public_ip_address" {
+  value = azurerm_public_ip.my_terraform_public_ip.ip_address
+}
