@@ -139,4 +139,4 @@ VM provisionada e validada de ponta a ponta: infraestrutura criada pelo Terrafor
 
 ## 👤 Autor
 
-**Heuler Silva** — Pós-graduando em AI Engineering (Impacta), em transição de carreira para Engenharia de Dados & IA.
+**Heuler Silva** — Data & AI Engineer
